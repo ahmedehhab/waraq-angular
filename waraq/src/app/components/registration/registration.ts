@@ -5,6 +5,7 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../services/auth-service';
 import { RegistrationValidators } from '../../services/registration-validators';
+import {RegistrationPayload} from '../../models/registration'
 
 
 @Component({
@@ -52,20 +53,19 @@ export class Registration {
 
     this.loading = true;
     this.errorMessage = '';
-    console.log(this.registerForm.value)
 
-    // const payload: RegistrationPayload = this.registerForm.value;
+    const payload: RegistrationPayload = this.registerForm.value;
 
-    // this.authService.register(payload).subscribe({
-    //   next: (res) => {
-    //     this.loading = false;
-    //     console.log('Registered successfully:', res);
-    //     // navigate or show success
-    //   },
-    //   error: (err) => {
-    //     this.loading = false;
-    //     this.errorMessage = err.error?.message ?? 'Registration failed. Please try again.';
-    //   },
-    // });
+    this.authService.register(payload).subscribe({
+      next: (res) => {
+        this.loading = false;
+        console.log('Registered successfully:', res);
+        // navigate or show success
+      },
+      error: (err) => {
+        this.loading = false;
+        this.errorMessage = err.error?.message ?? 'Registration failed. Please try again.';
+      },
+    });
   }
 }
